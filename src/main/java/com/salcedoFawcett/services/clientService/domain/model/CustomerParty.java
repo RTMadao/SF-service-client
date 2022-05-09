@@ -13,12 +13,13 @@ public class CustomerParty {
     private Set<TaxLevelCode> taxesLevelCode;
     private Address registrationAddress;
     private TaxSchema taxSchema;
-    private Contact contactData;
+    private int electronicInvoiceContactId;
+    private Set<Contact> contactsData;
 
     public CustomerParty() {
     }
 
-    public CustomerParty(int id, String additionalAccountId, PartyIdentification partyIdentification, String partyName, Address phisicalAddress, String registrationName, Set<TaxLevelCode> taxesLevelCode, Address registrationAddress, TaxSchema taxSchema, Contact contactData) {
+    public CustomerParty(int id, String additionalAccountId, PartyIdentification partyIdentification, String partyName, Address phisicalAddress, String registrationName, Set<TaxLevelCode> taxesLevelCode, Address registrationAddress, TaxSchema taxSchema, int electronicInvoiceContactId, Set<Contact> contactsData) {
         this.id = id;
         this.additionalAccountId = additionalAccountId;
         this.partyIdentification = partyIdentification;
@@ -28,10 +29,11 @@ public class CustomerParty {
         this.taxesLevelCode = taxesLevelCode;
         this.registrationAddress = registrationAddress;
         this.taxSchema = taxSchema;
-        this.contactData = contactData;
+        this.electronicInvoiceContactId = electronicInvoiceContactId;
+        this.contactsData = contactsData;
     }
 
-    public CustomerParty(String additionalAccountId, PartyIdentification partyIdentification, String partyName, Address phisicalAddress, String registrationName, Set<TaxLevelCode> taxesLevelCode, Address registrationAddress, TaxSchema taxSchema, Contact contactData) {
+    public CustomerParty(String additionalAccountId, PartyIdentification partyIdentification, String partyName, Address phisicalAddress, String registrationName, Set<TaxLevelCode> taxesLevelCode, Address registrationAddress, TaxSchema taxSchema, int electronicInvoiceContactId, Set<Contact> contactsData) {
         this.additionalAccountId = additionalAccountId;
         this.partyIdentification = partyIdentification;
         this.partyName = partyName;
@@ -40,7 +42,8 @@ public class CustomerParty {
         this.taxesLevelCode = taxesLevelCode;
         this.registrationAddress = registrationAddress;
         this.taxSchema = taxSchema;
-        this.contactData = contactData;
+        this.electronicInvoiceContactId = electronicInvoiceContactId;
+        this.contactsData = contactsData;
     }
 
     public int getId() {
@@ -115,11 +118,19 @@ public class CustomerParty {
         this.taxSchema = taxSchema;
     }
 
-    public Contact getContactData() {
-        return contactData;
+    public Set<Contact> getContactsData() {
+        return contactsData;
     }
 
-    public void setContactData(Contact contactData) {
-        this.contactData = contactData;
+    public void setContactsData(Set<Contact> contactsData) {
+        this.contactsData = contactsData;
+    }
+
+    public int getElectronicInvoiceContactId() {
+        return electronicInvoiceContactId;
+    }
+
+    public void setElectronicInvoiceContactId(int electronicInvoiceContactId) {
+        this.electronicInvoiceContactId = electronicInvoiceContactId;
     }
 }

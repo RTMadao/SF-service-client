@@ -1,18 +1,28 @@
-package com.salcedoFawcett.services.clientService.domain.model;
+package com.salcedoFawcett.services.clientService.persistence.entity;
 
-public class Contact {
+import javax.persistence.*;
+
+@Entity
+@Table(name = "party_contact_data")
+public class ContactData {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String telephone;
     private String telefax;
     private String electronicMail;
     private String note;
+    @Transient
     private boolean isElectronicInvoiceContact;
 
-    public Contact() {
-    }
+    @ManyToOne()
+    @JoinColumn(name = "party_id")
+    private Client party;
 
-    public Contact(int id, String name, String telephone, String telefax, String electronicMail, String note, boolean isElectronicInvoiceContact) {
+    public ContactData(){}
+
+    public ContactData(int id, String name, String telephone, String telefax, String electronicMail, String note, boolean isElectronicInvoiceContact, Client party) {
         this.id = id;
         this.name = name;
         this.telephone = telephone;
@@ -20,6 +30,7 @@ public class Contact {
         this.electronicMail = electronicMail;
         this.note = note;
         this.isElectronicInvoiceContact = isElectronicInvoiceContact;
+        this.party = party;
     }
 
     public int getId() {
@@ -68,6 +79,14 @@ public class Contact {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Client getParty() {
+        return party;
+    }
+
+    public void setParty(Client party) {
+        this.party = party;
     }
 
     public boolean isElectronicInvoiceContact() {

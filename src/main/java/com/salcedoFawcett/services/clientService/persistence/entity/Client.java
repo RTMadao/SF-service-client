@@ -2,18 +2,22 @@ package com.salcedoFawcett.services.clientService.persistence.entity;
 
 import javax.persistence.*;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "client")
 public class Client {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String additionalAccountId;
-    private int partyIdentificationId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "party_identification_id", referencedColumnName = "id")
+    private PartyIdentification partyIdentification;
     private String partyName;
-    private int phisicalAddressId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "phisical_address_id", referencedColumnName = "id")
+    private Address phisicalAddress;
     private String registrationName;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -21,9 +25,15 @@ public class Client {
         joinColumns = @JoinColumn(name = "client_id"),
         inverseJoinColumns = @JoinColumn(name = "tax_level_code_id"))
     private Set<TaxLevelCode> taxesLevelCode;
-    private int registrationAddressId;
-    private String taxSchemeId;
-    private int contactDataId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "registration_address_id", referencedColumnName = "id")
+    private Address registrationAddress;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tax_scheme_id", referencedColumnName = "id")
+    private TaxSchema taxSchema;
+    @OneToMany(mappedBy="party", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ContactData> contactsData;
+    private int electronicInvoiceContactId;
 
     public int getId() {
         return id;
@@ -41,14 +51,6 @@ public class Client {
         this.additionalAccountId = additionalAccountId;
     }
 
-    public int getPartyIdentificationId() {
-        return partyIdentificationId;
-    }
-
-    public void setPartyIdentificationId(int partyIdentificationId) {
-        this.partyIdentificationId = partyIdentificationId;
-    }
-
     public String getPartyName() {
         return partyName;
     }
@@ -56,15 +58,6 @@ public class Client {
     public void setPartyName(String partyName) {
         this.partyName = partyName;
     }
-
-    public int getPhisicalAddressId() {
-        return phisicalAddressId;
-    }
-
-    public void setPhisicalAddressId(int phisicalAddressId) {
-        this.phisicalAddressId = phisicalAddressId;
-    }
-
     public String getRegistrationName() {
         return registrationName;
     }
@@ -81,27 +74,61 @@ public class Client {
         this.taxesLevelCode = taxesLevelCode;
     }
 
-    public int getRegistrationAddressId() {
-        return registrationAddressId;
+    public PartyIdentification getPartyIdentification() {
+        return partyIdentification;
     }
 
-    public void setRegistrationAddressId(int registrationAddressId) {
-        this.registrationAddressId = registrationAddressId;
+    public void setPartyIdentification(PartyIdentification partyIdentificationId) {
+        this.partyIdentification = partyIdentificationId;
     }
 
-    public String getTaxSchemeId() {
-        return taxSchemeId;
+    public Address getPhisicalAddress() {
+        return phisicalAddress;
     }
 
-    public void setTaxSchemeId(String taxSchemeId) {
-        this.taxSchemeId = taxSchemeId;
+    public void setPhisicalAddress(Address phisicalAddress) {
+        this.phisicalAddress = phisicalAddress;
     }
 
-    public int getContactDataId() {
-        return contactDataId;
+    public Address getRegistrationAddress() {
+        return registrationAddress;
     }
 
-    public void setContactDataId(int contactDataId) {
-        this.contactDataId = contactDataId;
+    public void setRegistrationAddress(Address registrationAddress) {
+        this.registrationAddress = registrationAddress;
+    }
+
+    public TaxSchema getTaxSchema() {
+        return taxSchema;
+    }
+
+    public void setTaxSchema(TaxSchema taxSchema) {
+        this.taxSchema = taxSchema;
+    }
+
+    public Set<ContactData> getContactsData() {
+        return contactsData;
+    }
+
+    public void setContactsData(Set<ContactData> contactsData) {
+        this.contactsData = contactsData;
+    }
+
+    public int getElectronicInvoiceContactId() {
+        return this.electronicInvoiceContactId;
+    }
+
+    public void setElectronicInvoiceContactId(int electronicInvoiceContactId) {
+        this.electronicInvoiceContactId = electronicInvoiceContactId;
+    }
+
+    public Client addContacts(){
+        this.contactsData.forEach(contactData -> contactData.setParty(this));
+        return this;
+    }
+
+    public Client addElectronicInvoiceContact(){
+        this.electronicInvoiceContactId = this.contactsData.stream().filter(contactData -> contactData.isElectronicInvoiceContact()).collect(Collectors.toList()).get(0).getId();
+        return this;
     }
 }

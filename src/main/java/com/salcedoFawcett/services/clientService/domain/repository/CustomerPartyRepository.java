@@ -11,6 +11,7 @@ public interface CustomerPartyRepository {
     Optional<CustomerParty> getCustomerById(int customerID);
     Optional<CustomerParty> getCustomerByIdentification(double identification);
     CustomerParty save(CustomerParty customer);
+    CustomerParty update(CustomerParty customer);
     boolean customerExist(int customerID);
     void delete(int customerID);
 

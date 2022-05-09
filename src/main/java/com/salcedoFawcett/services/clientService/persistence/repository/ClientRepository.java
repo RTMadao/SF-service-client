@@ -38,7 +38,14 @@ public class ClientRepository implements CustomerPartyRepository {
 
     @Override
     public CustomerParty save(CustomerParty customer) {
-        return mapper.toCustomerParty(clientCrudRepository.save(mapper.toClient(customer)));
+        Client client = mapper.toClient(customer).addContacts();
+        client = clientCrudRepository.save(client).addElectronicInvoiceContact();
+        return mapper.toCustomerParty(clientCrudRepository.save(client));
+    }
+
+    @Override
+    public CustomerParty update(CustomerParty customer) {
+        return mapper.toCustomerParty(clientCrudRepository.save(mapper.toClient(customer).addContacts()));
     }
 
     @Override
@@ -48,6 +55,6 @@ public class ClientRepository implements CustomerPartyRepository {
 
     @Override
     public void delete(int customerID) {
-
+        clientCrudRepository.deleteById(customerID);
     }
 }

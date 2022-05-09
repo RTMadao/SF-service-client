@@ -29,8 +29,8 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<CustomerParty> saveCustomerParty(@RequestBody CustomerParty contactData){
-        return new ResponseEntity<>(customerPartyService.save(contactData), HttpStatus.CREATED);
+    public ResponseEntity<CustomerParty> saveCustomerParty(@RequestBody CustomerParty customerParty){
+        return new ResponseEntity<>(customerPartyService.save(customerParty), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/basic_info")
@@ -45,9 +45,9 @@ public class CustomerController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping("/update/address_info/{id}")
-    public  ResponseEntity<CustomerParty> updateAddress(@PathVariable("id") int id, @RequestBody Address address) {
-        return  customerPartyService.updateAddress(id,address).map(customerUpdates -> new ResponseEntity<>(customerUpdates,HttpStatus.OK))
+    @PutMapping("/update/address_info")
+    public  ResponseEntity<CustomerParty> updateAddress(@RequestBody CustomerParty customer) {
+        return  customerPartyService.updateAddress(customer).map(customerUpdates -> new ResponseEntity<>(customerUpdates,HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -55,5 +55,17 @@ public class CustomerController {
     public  ResponseEntity<CustomerParty> updateContactinfo(@RequestBody CustomerParty customer) {
         return  customerPartyService.updateContactinfo(customer).map(customerUpdates -> new ResponseEntity<>(customerUpdates,HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @PutMapping("/update/electronic_invoice_contact")
+    public  ResponseEntity<CustomerParty> updateElectronicInvoiceContact(@RequestBody CustomerParty customer) {
+        return  customerPartyService.updateElectronicInvoiceContact(customer).map(customerUpdates -> new ResponseEntity<>(customerUpdates,HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public  ResponseEntity<?> delete(@PathVariable("id") int id) {
+        if (customerPartyService.delete(id)) return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
