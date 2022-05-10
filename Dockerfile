@@ -1,6 +1,6 @@
 FROM openjdk:11-jre-slim
 
-COPY build/libs/clientService-0.0.1-SNAPSHOT.jar home/spring/salcedo_fawcett/client_service.jar
+COPY build/libs/clientService-1.0.0-SNAPSHOT.jar home/spring/salcedo_fawcett/client_service.jar
 EXPOSE 3006
 
 # Add docker-compose-wait tool -------------------
