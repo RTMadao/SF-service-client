@@ -27,8 +27,8 @@ public class ClientRepository implements CustomerPartyRepository {
     }
 
     @Override
-    public Optional<CustomerParty> getCustomerById(int customerID) {
-        return clientCrudRepository.findById(customerID).map(mapper::toCustomerParty);
+    public Optional<CustomerParty> getCustomerById(long customerID) {
+        return clientCrudRepository.findByPartyIdentificationPartyIdentificationId(customerID).map(mapper::toCustomerParty);
     }
 
     @Override

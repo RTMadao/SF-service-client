@@ -1,6 +1,5 @@
 package com.salcedoFawcett.services.clientService.web.controller;
 
-import com.salcedoFawcett.services.clientService.domain.model.Address;
 import com.salcedoFawcett.services.clientService.domain.model.CustomerParty;
 import com.salcedoFawcett.services.clientService.domain.service.CustomerPartyService;
 import org.springframework.beans.factory.annotation.Autowired;

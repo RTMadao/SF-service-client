@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CustomerPartyRepository {
 
     List<CustomerParty> getAll();
-    Optional<CustomerParty> getCustomerById(int customerID);
+    Optional<CustomerParty> getCustomerById(long customerID);
     Optional<CustomerParty> getCustomerByIdentification(double identification);
     CustomerParty save(CustomerParty customer);
     CustomerParty update(CustomerParty customer);
