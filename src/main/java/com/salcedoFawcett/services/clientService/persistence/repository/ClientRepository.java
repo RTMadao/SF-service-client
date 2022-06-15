@@ -27,13 +27,13 @@ public class ClientRepository implements CustomerPartyRepository {
     }
 
     @Override
-    public Optional<CustomerParty> getCustomerById(long customerID) {
-        return clientCrudRepository.findByPartyIdentificationPartyIdentificationId(customerID).map(mapper::toCustomerParty);
+    public Optional<CustomerParty> getCustomerById(int customerID) {
+        return clientCrudRepository.findById(customerID).map(mapper::toCustomerParty);
     }
 
     @Override
-    public Optional<CustomerParty> getCustomerByIdentification(double identification) {
-        return Optional.empty();
+    public Optional<CustomerParty> getCustomerByIdentification(long customerID) {
+        return clientCrudRepository.findByPartyIdentificationPartyIdentificationId(customerID).map(mapper::toCustomerParty);
     }
 
     @Override

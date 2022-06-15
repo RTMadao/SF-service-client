@@ -20,6 +20,9 @@ public class CustomerPartyService {
     public Optional<CustomerParty> getById(int id){
         return customerPartyRepository.getCustomerById(id);
     }
+    public Optional<CustomerParty> getByIdentification(int id){
+        return customerPartyRepository.getCustomerByIdentification(id);
+    }
 
     public CustomerParty save(CustomerParty customer){
         return customerPartyRepository.save(customer);

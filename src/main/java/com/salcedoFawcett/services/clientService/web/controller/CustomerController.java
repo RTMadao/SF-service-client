@@ -20,6 +20,13 @@ public class CustomerController {
         return new ResponseEntity<>(customerPartyService.getAll(), HttpStatus.OK);
     }
 
+    @GetMapping("/get_by_identification/{id}")
+    public  ResponseEntity<CustomerParty> getCustomerPartyByIdentification(@PathVariable("id") int id) {
+        return customerPartyService.getByIdentification(id)
+                .map( item -> new ResponseEntity<>(item, HttpStatus.OK))
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     @GetMapping("/{id}")
     public  ResponseEntity<CustomerParty> getCustomerPartyById(@PathVariable("id") int id) {
         return customerPartyService.getById(id)
